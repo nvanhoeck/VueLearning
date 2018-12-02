@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Solo from '@/components/tetris/Solo'
 import Router from 'vue-router'
 import Templates from '@/components/Templates'
 import Binding from '@/components/Binding'
@@ -20,6 +21,9 @@ import VIf from '@/components/VIf'
 import VFor from '@/components/VFor'
 import IdCalculation from '@/components/IdCalculation'
 import VForTemplates from '@/components/VForTemplates'
+import MScontainer from '@/components/monster-slayer/MSContainer'
+import TetrisContainer from '@/components/tetris/Container'
+import MainMenu from '@/components/tetris/MainMenu'
 
 Vue.use(Router)
 
@@ -124,6 +128,31 @@ export default new Router({
       path: '/v-for/template',
       name: 'VFor Templates',
       component: VForTemplates
+    },
+    {
+      path: '/monster-slayer',
+      name: 'Monster-Slayer',
+      component: MScontainer,
+      children: [
+
+      ]
+    },
+    {
+      path: '/tetris',
+      name: 'TetrisContainer',
+      component: TetrisContainer,
+      children: [
+        {
+          path: 'menu',
+          name: 'MainMenu',
+          component: MainMenu
+        },
+        {
+          path: 'solo',
+          name: 'Solo',
+          component: Solo
+        }
+      ]
     }
   ]
 })
