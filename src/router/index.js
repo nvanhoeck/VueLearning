@@ -16,6 +16,10 @@ import Watch from '@/components/Watch'
 import Css from '@/components/Css'
 import CssNames from '@/components/CssNames'
 import BindStyle from '@/components/BindStyle'
+import VIf from '@/components/VIf'
+import VFor from '@/components/VFor'
+import IdCalculation from '@/components/IdCalculation'
+import VForTemplates from '@/components/VForTemplates'
 
 Vue.use(Router)
 
@@ -100,6 +104,26 @@ export default new Router({
       path: '/css/bindstyle',
       name: 'Bind Style',
       component: BindStyle
+    },
+    {
+      path: '/v-if',
+      name: 'V-if',
+      component: VIf
+    },
+    {
+      path: '/v-for',
+      name: 'V-for',
+      component: VFor
+    },
+    {
+      path: '/id-calculation',
+      name: 'IdCalculation',
+      component: IdCalculation
+    },
+    {
+      path: '/v-for/template',
+      name: 'VFor Templates',
+      component: VForTemplates
     }
   ]
 })
