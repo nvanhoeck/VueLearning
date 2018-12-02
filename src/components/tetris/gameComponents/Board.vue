@@ -11,7 +11,19 @@
 
   export default {
     name: 'Board',
-    components: {BoardBlock}
+    components: {BoardBlock},
+    data: function () {
+      return {
+        boardBlocks: []
+      }
+    },
+    methods: {
+      setActive(x, y, color) {
+        let tile = this.$children.find(block => block.x === x && block.y === y)
+        tile.isActive = true
+        tile.tileColor = color
+      }
+    }
   }
 </script>
 
@@ -27,8 +39,8 @@
     align-items: center;
     align-content: center;
     justify-content: center;
-    margin-left: calc((100vw - 350px - 150px)/2);
-    margin-top: calc((100vh - 600px)/2);
+    margin-left: calc((100vw - 350px - 150px) / 2);
+    margin-top: calc((100vh - 600px) / 2);
     z-index: 5;
     border-radius: 20px;
   }

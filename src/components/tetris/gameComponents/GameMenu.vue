@@ -28,10 +28,10 @@
     },
     methods: {
       startGame: function () {
-        this.$emit('startGame', false);
+        this.$emit('startGame', true);
       },
       continueGame: function () {
-        this.$emit('continueGame', false);
+        this.$emit('continueGame', true);
       },
       goBack: function () {
         this.$router.push(this.currentRoute + 'tetris/menu')

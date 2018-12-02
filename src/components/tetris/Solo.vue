@@ -1,12 +1,12 @@
 <template>
   <div class="solo-container white">
-    <GameMenu v-show="gameEnded || gamePaused"
-              @startGame="gameEnded = $event"
-              @continueGame="gamePaused = $event"
+    <GameMenu v-show="!playingGame || gamePaused"
+              @startGame="playingGame = true"
+              @continueGame="gamePaused = !$event"
               :gamePaused="gamePaused"
     >
     </GameMenu>
-    <Game></Game>
+    <Game v-bind:isPlaying="playingGame"></Game>
   </div>
 </template>
 
@@ -19,7 +19,7 @@
     components: {GameMenu, Game},
     data: function () {
       return {
-        gameEnded: true,
+        playingGame: false,
         gamePaused: false
       }
     },
