@@ -13,6 +13,7 @@
 <script>
   import Game from '@/components/tetris/gameComponents/Game'
   import GameMenu from "@/components/tetris/gameComponents/GameMenu";
+  import {ESC} from '@/components/tetris/KeyCodes'
 
   export default {
     name: 'Solo',
@@ -25,7 +26,7 @@
     },
     methods: {
       buttonPressed: function (event) {
-        if (event.keyCode === 27) {
+        if (event.keyCode === ESC) {
           this.gamePaused = true
         }
       }

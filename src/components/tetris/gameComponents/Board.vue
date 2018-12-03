@@ -12,16 +12,24 @@
   export default {
     name: 'Board',
     components: {BoardBlock},
-    data: function () {
-      return {
-        boardBlocks: []
-      }
-    },
     methods: {
-      setActive(x, y, color) {
-        let tile = this.$children.find(block => block.x === x && block.y === y)
-        tile.isActive = true
+      setActive: function(x, y, color) {
+        let tile = this.$children.find(block => block.x === x && block.y === y);
+        tile.changeActivation(true);
         tile.tileColor = color
+      },
+      setInactive: function(x, y) {
+        let tile = this.$children.find(block => block.x === x && block.y === y);
+        tile.changeActivation(false);
+      },
+      getBoardTile: function (x, y) {
+        return this.$children.find(block => block.x === x && block.y === y);
+      },
+      lockTetromino: function(blocks, posX, posY, activeState) {
+        for (const block of blocks) {
+          let tile = this.$children.find(b => b.x === block.metricsToCenter[activeState].x + posX && b.y === block.metricsToCenter[activeState].y + posY)
+          tile.changeFilled(true)
+        }
       }
     }
   }

@@ -43,7 +43,6 @@
       calculateStateId: function () {
         let power = 0
         power = Number((Number(this.y * 8) + Number(this.x)))
-        console.log(this.y, 8, this.x, power);
         this.id = Number(Math.pow(13, power)) * Number(this.currentState)
       },
 

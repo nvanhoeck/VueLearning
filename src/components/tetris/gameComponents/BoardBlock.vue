@@ -1,5 +1,5 @@
 <template>
-  <div class="red tile" :class="tileColor">
+  <div class="tile" :class="isActive || isFilled ? tileColor : 'grey'">
     <p class="index row" v-if="x === 1">{{y}}</p>
     <p class="index" v-else>{{x}}</p>
   </div>
@@ -8,15 +8,25 @@
 <script>
   export default {
     name: 'BoardBlock',
-    data: function() {
-      return{
+    data: function () {
+      return {
         isActive: false,
-        tileColor: 'grey'
+        tileColor: 'grey',
+        isFilled: false
       }
     },
     props: {
       x: Number,
       y: Number
+    },
+    methods: {
+      changeActivation: function(value){
+        this.isActive = value
+      },
+      changeFilled: function(value){
+        this.isActive != value;
+        this.isFilled = value;
+      }
     }
   }
 </script>
