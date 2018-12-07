@@ -42,8 +42,12 @@
         let isFree = true
         for (const block of tetromino.blocks) {
           isFree = this.calculateFreePathInRotation(block, posX, posY, tetromino.currentState, tetromino.getNextState())
+          isFree = !this.endOfBoardReached(block, posX, posY, tetromino.getNextState(), 0, 1);
+          if(!isFree){
+            return false
+          }
         }
-        return isFree
+        return true
       },
       calculateFreePathInRotation(block, posX, posY, currentState, nextState) {
         let yDif = block.getMetricByState(currentState).y + block.getMetricByState(nextState).y

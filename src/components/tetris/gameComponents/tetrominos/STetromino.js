@@ -1,6 +1,6 @@
-export default function StraightTetromino() {
-  this.name = 'Straight';
-  this.color = 'blue-green';
+export default function ZTetromino() {
+  this.name = 'Z';
+  this.color = 'orange';
   this.currentState = 0;
   this.isActive = true;
   this.startX = 5;
@@ -8,9 +8,9 @@ export default function StraightTetromino() {
   this.blocks = [
     {
       metricsToCenter: [
-        {x: 1, y: 0},
-        {x: 0, y: -1},
-        {x: 1, y: 1},
+        {x: 1, y: -1},
+        {x: 0, y: 1},
+        {x: -1, y: 0},
         {x: -1, y: -1},
       ],
       getMetricByState: function (currentState) {
@@ -19,9 +19,9 @@ export default function StraightTetromino() {
     },
     {
       metricsToCenter: [
+        {x: 0, y: -1},
         {x: 0, y: 0},
         {x: 0, y: 0},
-        {x: 0, y: 1},
         {x: -1, y: 0},
       ],
       getMetricByState: function (currentState) {
@@ -30,10 +30,10 @@ export default function StraightTetromino() {
     },
     {
       metricsToCenter: [
+        {x: 0, y: 0},
         {x: -1, y: 0},
-        {x: 0, y: 1},
-        {x: -1, y: 1},
-        {x: -1, y: 1},
+        {x: 0, y: -1},
+        {x: 0, y: 0},
       ],
       getMetricByState: function (currentState) {
         return this.metricsToCenter[currentState]
@@ -41,15 +41,15 @@ export default function StraightTetromino() {
     },
     {
       metricsToCenter: [
-        {x: -2, y: 0},
-        {x: 0, y: 2},
-        {x: -2, y: 1},
-        {x: -1, y: 2},
+        {x: -1, y: 0},
+        {x: -1, y: -1},
+        {x: 1, y: -1},
+        {x: 0, y: 1},
       ],
       getMetricByState: function (currentState) {
         return this.metricsToCenter[currentState]
       }
-    },
+    }
   ];
 
   this.rotate = function () {

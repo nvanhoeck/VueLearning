@@ -1,6 +1,6 @@
 <template>
   <div class="tile" :class="isActive || isFilled ? tileColor : 'grey'">
-    <p class="index row" v-if="x === 0">{{y}}</p>
+    <p class="index row" v-if="x === 1">{{y}}</p>
     <p class="index" v-else>{{x}}</p>
   </div>
 </template>

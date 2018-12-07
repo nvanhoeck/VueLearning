@@ -9,6 +9,7 @@
   import Straight from '@/components/tetris/gameComponents/tetrominos/StraightTetromino'
   import {ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP} from "@/components/tetris/KeyCodes";
   import ZTetromino from "@/components/tetris/gameComponents/tetrominos/ZTetromino";
+  import STetromino from '@/components/tetris/gameComponents/tetrominos/STetromino'
 
   export default {
     name: 'Game',
@@ -18,7 +19,7 @@
     components: {Board},
     data: function () {
       return {
-        tetrominos: [new Straight(0, 5), new ZTetromino(0,5)],
+        tetrominos: [/*new Straight(), new ZTetromino(),*/ new STetromino],
         activeTetromino: undefined,
         posX: 0,
         posY: 0,
