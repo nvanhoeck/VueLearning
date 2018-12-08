@@ -2,11 +2,13 @@
   <div class="solo-container white">
     <GameMenu v-show="!playingGame || gamePaused"
               @startGame="playingGame = true"
-              @continueGame="gamePaused = !$event"
+              @continueGame="gamePaused = false"
               :gamePaused="gamePaused"
     >
     </GameMenu>
-    <Game v-bind:isPlaying="playingGame"></Game>
+    <Game v-bind:isPlaying="playingGame"
+          :isPaused="gamePaused"
+    ></Game>
   </div>
 </template>
 

@@ -7,22 +7,29 @@
 <script>
   import Board from '@/components/tetris/gameComponents/Board'
   import Straight from '@/components/tetris/gameComponents/tetrominos/StraightTetromino'
-  import {ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP} from "@/components/tetris/KeyCodes";
+  import {ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ARROW_UP, SPACEBAR} from "@/components/tetris/KeyCodes";
   import ZTetromino from "@/components/tetris/gameComponents/tetrominos/ZTetromino";
   import STetromino from '@/components/tetris/gameComponents/tetrominos/STetromino'
+  import SquareTetromino from "@/components/tetris/gameComponents/tetrominos/SquareTetromino";
+  import TTetromino from "@/components/tetris/gameComponents/tetrominos/TTetromino";
+  import JTetromino from "@/components/tetris/gameComponents/tetrominos/JTetromino";
+  import LTetromino from "@/components/tetris/gameComponents/tetrominos/LTetromino";
 
   export default {
     name: 'Game',
     props: {
-      isPlaying: Boolean
+      isPlaying: Boolean,
+      isPaused: Boolean
     },
     components: {Board},
     data: function () {
       return {
-        tetrominos: [/*new Straight(), new ZTetromino(),*/ new STetromino],
+        tetrominos: [new Straight(), new ZTetromino(), new STetromino(), new SquareTetromino(), new TTetromino(), new JTetromino(), new LTetromino()],
         activeTetromino: undefined,
         posX: 0,
         posY: 0,
+        score: 0,
+        timer: undefined
       }
     },
     methods: {
@@ -83,10 +90,8 @@
               this.updateActiveTetromino();
             }
             break;
-          case SPACES:
-            this.resetActiveTetromino();
-            this.moveDown();
-            this.updateActiveTetromino();
+          case SPACEBAR:
+            this.drop();
             break;
         }
       },
@@ -94,11 +99,23 @@
         this.posX += direction.x;
         this.posY += direction.y;
       },
+      drop: function(){
+        while(!this.checkIfTetrminoIsStuck()){
+          this.resetActiveTetromino();
+          this.move({x:0, y:1});
+          this.updateActiveTetromino();
+        }
+      },
       directionIsFree: function (xDirection, yDirection) {
         let isFree = true;
         for (const block of this.activeTetromino.blocks) {
-          if (this.$refs.board.endOfBoardReached(block, this.posX, this.posY, this.activeTetromino.currentState, xDirection, yDirection) || this.$refs.board.nextTileHasBlock(block, this.activeTetromino.currentState, this.posX, this.posY, xDirection, yDirection)) {
-            isFree = false;
+          if(this.$refs.board !== undefined) {
+            if (this.$refs.board.endOfBoardReached(block, this.posX, this.posY, this.activeTetromino.currentState, xDirection, yDirection) || this.$refs.board.nextTileHasBlock(block, this.activeTetromino.currentState, this.posX, this.posY, xDirection, yDirection)) {
+              isFree = false;
+            }
+          } else {
+            return this.directionIsFree(xDirection, yDirection)
+            break
           }
         }
         return isFree;
@@ -106,6 +123,8 @@
       checkIfTetrminoIsStuck: function () {
         if (!this.directionIsFree(0, 1)) {
           this.$refs.board.lockTetromino(this.activeTetromino.blocks, this.posX, this.posY, this.activeTetromino.currentState);
+          // TODO change #row to score
+          this.score = this.$refs.board.amountOfRowsCleared();
           this.drawNewTetromino();
           return true;
         }
@@ -121,7 +140,7 @@
         for (const block of this.activeTetromino.blocks) {
           let currentXPos = block.getMetricByState(this.activeTetromino.currentState).x + this.posX;
           if (currentXPos < 1 && maxDifference >= currentXPos) {
-            maxDifference = currentXPos -1
+            maxDifference = currentXPos - 1
           } else if (currentXPos >= 10 && maxDifference + 10 < currentXPos) {
             maxDifference = currentXPos - 10;
           }
@@ -132,21 +151,44 @@
         let maxDifference = 0;
         for (const block of this.activeTetromino.blocks) {
           let currentYPos = block.getMetricByState(this.activeTetromino.currentState).y + this.posY;
-          console.log('Current y', currentYPos);
           if (currentYPos < 1 && maxDifference >= currentYPos) {
             maxDifference = currentYPos - 1
           }
         }
         this.posY = this.posY + -maxDifference
+      },
+      moveDownTicker: function () {
+        this.timer = setTimeout(() => {
+          if (!this.checkIfTetrminoIsStuck() && this.isPlaying && !this.isPaused) {
+            this.resetActiveTetromino();
+            this.move({x: 0, y: 1});
+            this.updateActiveTetromino();
+            window.clearTimeout(this.timer)
+            this.timer = undefined
+            this.moveDownTicker()
+          }
+        }, 1000)
       }
-    },
+    }
+    ,
     watch: {
       isPlaying: function (newValue, oldValue) {
         if (newValue && undefined === this.activeTetromino) {
           this.drawNewTetromino()
+          this.moveDownTicker()
+        }
+      },
+      isPaused: function (newValue) {
+        console.log(newValue)
+        if (newValue) {
+          window.clearTimeout(this.timer)
+          this.timer = undefined
+        } else {
+          this.moveDownTicker()
         }
       }
-    },
+    }
+    ,
     created: function () {
       window.addEventListener('keydown', this.buttonPressed)
     }

@@ -1,6 +1,6 @@
-export default function STetromino() {
-  this.name = 'Z';
-  this.color = 'orange';
+export default function LTetromino() {
+  this.name = 'L';
+  this.color = 'green';
   this.currentState = 0;
   this.isActive = true;
   this.startX = 5;
@@ -8,48 +8,48 @@ export default function STetromino() {
   this.blocks = [
     {
       metricsToCenter: [
-        {x: 1, y: -1},
-        {x: 0, y: 1},
-        {x: -1, y: 0},
-        {x: -1, y: -1},
-      ],
-      getMetricByState: function (currentState) {
-        return this.metricsToCenter[currentState]
-      }
-    },
-    {
-      metricsToCenter: [
-        {x: 0, y: -1},
-        {x: 0, y: 0},
-        {x: 0, y: 0},
-        {x: -1, y: 0},
-      ],
-      getMetricByState: function (currentState) {
-        return this.metricsToCenter[currentState]
-      }
-    },
-    {
-      metricsToCenter: [
-        {x: 0, y: 0},
-        {x: -1, y: 0},
-        {x: 0, y: -1},
-        {x: 0, y: 0},
-      ],
-      getMetricByState: function (currentState) {
-        return this.metricsToCenter[currentState]
-      }
-    },
-    {
-      metricsToCenter: [
-        {x: -1, y: 0},
+        {x: -1, y: 1},
         {x: -1, y: -1},
         {x: 1, y: -1},
+        {x: 1, y: 1},
+      ],
+      getMetricByState: function (currentState) {
+        return this.metricsToCenter[currentState]
+      }
+    },
+    {
+      metricsToCenter: [
+        {x: -1, y: 0},
+        {x: 0, y: -1},
+        {x: 1, y: 0},
         {x: 0, y: 1},
       ],
       getMetricByState: function (currentState) {
         return this.metricsToCenter[currentState]
       }
-    }
+    },
+    {
+      metricsToCenter: [
+        {x: 0, y: 0},
+        {x: 0, y: 0},
+        {x: 0, y: 0},
+        {x: 0, y: 0},
+      ],
+      getMetricByState: function (currentState) {
+        return this.metricsToCenter[currentState]
+      }
+    },
+    {
+      metricsToCenter: [
+        {x: 1, y: 0},
+        {x: 0, y: 1},
+        {x: -1, y: 0},
+        {x: 0, y: -1},
+      ],
+      getMetricByState: function (currentState) {
+        return this.metricsToCenter[currentState]
+      }
+    },
   ];
 
   this.rotate = function () {

@@ -14,12 +14,12 @@
     components: {BoardBlock},
     methods: {
       setActive: function (x, y, color) {
-        let tile = this.$children.find(block => block.x === x && block.y === y);
+        let tile = this.getBoardTile(x, y);
         tile.changeActivation(true);
         tile.tileColor = color
       },
       setInactive: function (x, y) {
-        let tile = this.$children.find(block => block.x === x && block.y === y);
+        let tile = this.getBoardTile(x, y);
         tile.changeActivation(false);
       },
       getBoardTile: function (x, y) {
@@ -43,7 +43,7 @@
         for (const block of tetromino.blocks) {
           isFree = this.calculateFreePathInRotation(block, posX, posY, tetromino.currentState, tetromino.getNextState())
           isFree = !this.endOfBoardReached(block, posX, posY, tetromino.getNextState(), 0, 1);
-          if(!isFree){
+          if (!isFree) {
             return false
           }
         }
@@ -62,6 +62,43 @@
           }
         }
         return true;
+      },
+      amountOfRowsCleared: function () {
+        let rows = 0;
+        for (let row = 1; row <= 20; row++) {
+          let isFull = true;
+          for (let x = 1; x <= 10; x++) {
+            if (!this.getBoardTile(x, row).isFilled) {
+              isFull = false;
+              break;
+            }
+          }
+          if (isFull) {
+            rows++;
+            this.clearRows(row)
+          }
+        }
+        return rows;
+      },
+      clearRows: function (startRow) {
+        for (let x = 1; x <= 10; x++) {
+          this.getBoardTile(x, startRow).isFilled = false;
+          this.getBoardTile(x, startRow).isActive = false;
+        }
+        for (let y = startRow; y > 1; y--) {
+          for (let x = 1; x <= 10; x++) {
+            console.log(x, y,'IsFilled: ', this.getBoardTile(x,y).isFilled, ' To ', this.getBoardTile(x, y - 1).isFilled)
+            if (this.getBoardTile(x, y -1 ).isFilled) {
+              this.getBoardTile(x, y).changeFilled(true);
+              this.getBoardTile(x, y).changeActivation(false)
+              this.getBoardTile(x, y).tileColor = this.getBoardTile(x, y -1).tileColor;
+              this.getBoardTile(x, y-1).changeFilled(false)
+              this.getBoardTile(x, y-1).changeActivation(false)
+            } else {
+              this.getBoardTile(x,y).changeFilled(false)
+            }
+          }
+        }
       }
     }
   }

@@ -1,5 +1,5 @@
-export default function STetromino() {
-  this.name = 'Z';
+export default function JTetromino() {
+  this.name = 'J';
   this.color = 'orange';
   this.currentState = 0;
   this.isActive = true;
@@ -8,48 +8,48 @@ export default function STetromino() {
   this.blocks = [
     {
       metricsToCenter: [
-        {x: 1, y: -1},
-        {x: 0, y: 1},
-        {x: -1, y: 0},
-        {x: -1, y: -1},
-      ],
-      getMetricByState: function (currentState) {
-        return this.metricsToCenter[currentState]
-      }
-    },
-    {
-      metricsToCenter: [
-        {x: 0, y: -1},
-        {x: 0, y: 0},
-        {x: 0, y: 0},
-        {x: -1, y: 0},
-      ],
-      getMetricByState: function (currentState) {
-        return this.metricsToCenter[currentState]
-      }
-    },
-    {
-      metricsToCenter: [
-        {x: 0, y: 0},
-        {x: -1, y: 0},
-        {x: 0, y: -1},
-        {x: 0, y: 0},
-      ],
-      getMetricByState: function (currentState) {
-        return this.metricsToCenter[currentState]
-      }
-    },
-    {
-      metricsToCenter: [
-        {x: -1, y: 0},
         {x: -1, y: -1},
         {x: 1, y: -1},
+        {x: 1, y: 1},
+        {x: -1, y: 1},
+      ],
+      getMetricByState: function (currentState) {
+        return this.metricsToCenter[currentState]
+      }
+    },
+    {
+      metricsToCenter: [
+        {x: -1, y: 0},
+        {x: 0, y: -1},
+        {x: 1, y: 0},
         {x: 0, y: 1},
       ],
       getMetricByState: function (currentState) {
         return this.metricsToCenter[currentState]
       }
-    }
+    },
+    {
+      metricsToCenter: [
+        {x: 0, y: 0},
+        {x: 0, y: 0},
+        {x: 0, y: 0},
+        {x: 0, y: 0},
+      ],
+      getMetricByState: function (currentState) {
+        return this.metricsToCenter[currentState]
+      }
+    },
+    {
+      metricsToCenter: [
+        {x: 1, y: 0},
+        {x: 0, y: 1},
+        {x: -1, y: 0},
+        {x: 0, y: -1},
+      ],
+      getMetricByState: function (currentState) {
+        return this.metricsToCenter[currentState]
+      }
+    },
   ];
 
   this.rotate = function () {
